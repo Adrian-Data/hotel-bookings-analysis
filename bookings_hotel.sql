@@ -1,3 +1,24 @@
+#CARGA DE DATOS
+
+-- PROBLEMA 1: El Import Wizard de MySQL Workbench tardaba más
+-- de 30 minutos sin completar la carga de 119.390 registros.
+-- SOLUCIÓN: Se utilizó LOAD DATA INFILE como alternativa
+-- PROBLEMA 2: El CSV exportado desde Excel usaba punto y coma (;) como separador en lugar de coma (,).
+
+-- Verifico la carpeta donde MySQL acepta archivos externos
+SHOW VARIABLES LIKE 'secure_file_priv';
+
+-- Importación del CSV
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 9.6/Uploads/hotel_bookings_fixed.csv'
+INTO TABLE hotel_bookings
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+-- Verificación de carga: debe retornar exactamente 119.390
+SELECT COUNT(*) AS total_registros FROM hotel_bookings;
+
 #LIMPIEZA DE DATOS
 
 #ANÁLISIS DE TODAS LAS COLUMNAS EN BUSQUEDA DE NULOS (RESULTADO 0 NULOS)
